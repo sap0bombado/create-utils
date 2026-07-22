@@ -18,15 +18,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Authenticate Wally
         env:
-          TOKEN: ${{ secrets.WALLY_TOKEN }}
+          WALLY_TOKEN: ${{ secrets.WALLY_TOKEN }}
         run: |
-          mkdir -p ~/.wally
-          cat > ~/.wally/auth.toml << EOAUTH
-          [tokens]
-          "https://github.com/UpliftGames/wally-index" = "$TOKEN"
-          EOAUTH
-      - name: Debug auth file
-        run: cat ~/.wally/auth.toml
+          cd lib/create-signal
+          wally login --token "$WALLY_TOKEN"
       - name: Publish packages
         run: |
           IFS=',' read -ra PKGS <<< "${{ inputs.packages }}"
