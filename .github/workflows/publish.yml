@@ -19,10 +19,7 @@ jobs:
       - name: Authenticate Wally
         run: |
           mkdir -p ~/.wally
-          cat > ~/.wally/auth.toml << EOF
-[tokens]
-"https://github.com/UpliftGames/wally-index" = "${{ secrets.WALLY_TOKEN }}"
-EOF
+          printf '[tokens]\n"https://github.com/UpliftGames/wally-index" = "%s"\n' "${{ secrets.WALLY_TOKEN }}" > ~/.wally/auth.toml
       - name: Publish packages
         run: |
           IFS=',' read -ra PKGS <<< "${{ inputs.packages }}"
