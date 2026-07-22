@@ -1,0 +1,6 @@
+*.rbxm
+*.rbxmx
+*.tgz
+wally.lock
+pesde.lock
+lib/*/.git

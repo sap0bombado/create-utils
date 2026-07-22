@@ -1,0 +1,30 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: "Packages to publish (comma-separated)"
+        required: true
+        default: "create-signal,create-throttle,create-pool,create-scope,create-input"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: CompeyDev/setup-rokit@v0.1.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish packages
+        env:
+          WALLY_TOKEN: ${{ secrets.WALLY_TOKEN }}
+        run: |
+          IFS=',' read -ra PKGS <<< "${{ inputs.packages }}"
+          for pkg in "${PKGS[@]}"; do
+            pkg=$(echo "$pkg" | xargs)
+            echo "Publishing $pkg..."
+            cd "lib/$pkg"
+            wally publish
+            cd ../..
+          done

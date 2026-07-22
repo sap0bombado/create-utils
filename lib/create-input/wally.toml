@@ -1,0 +1,9 @@
+[package]
+name = "sap0bombado/create-input"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependencies]
+createSignal = "sap0bombado/create-signal@1.3.0"
+createPool = "sap0bombado/create-pool@0.3.1"
