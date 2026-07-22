@@ -16,9 +16,12 @@ jobs:
       - uses: CompeyDev/setup-rokit@v0.1.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Authenticate Wally
+        run: |
+          mkdir -p ~/.wally
+          echo "[token]" > ~/.wally/auth.toml
+          echo "token = \"${{ secrets.WALLY_TOKEN }}\"" >> ~/.wally/auth.toml
       - name: Publish packages
-        env:
-          WALLY_TOKEN: ${{ secrets.WALLY_TOKEN }}
         run: |
           IFS=',' read -ra PKGS <<< "${{ inputs.packages }}"
           for pkg in "${PKGS[@]}"; do
