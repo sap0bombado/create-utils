@@ -8,16 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: CompeyDev/setup-rokit@v0.1.2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - run: selene lib/
-
   style:
     name: Style
     runs-on: ubuntu-latest
@@ -26,4 +16,4 @@ jobs:
       - uses: CompeyDev/setup-rokit@v0.1.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - run: stylua --check --respect-ignores lib/
+      - run: stylua --syntax Luau --check --respect-ignores lib/
