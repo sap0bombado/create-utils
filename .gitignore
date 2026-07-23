@@ -4,3 +4,5 @@
 wally.lock
 pesde.lock
 lib/*/.git
+docs/node_modules
+docs/build
