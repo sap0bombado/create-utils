@@ -1,8 +1,6 @@
 # create-input
 
-Roblox `UserInputService` wrapper. Instead of filtering `InputBegan`/`InputEnded` globally, get a `Signal` that fires only for the input you specify.
-
-The first call lazily creates a single global listener on `UserInputService`. Subsequent calls reuse it.
+Roblox `UserInputService` wrapper. Get a `Signal` that fires only for the input you specify.
 
 ## Install
 

@@ -1,6 +1,6 @@
 # create-pool
 
-Object pool. Pre-allocates objects and reuses them to reduce GC pressure.
+Object pool.
 
 ## Install
 
@@ -15,7 +15,7 @@ createPool = "sap0bombado/create-pool@0.3.1"
 
 | Param | Type | Description |
 |-------|------|-------------|
-| `preAllocSize` | `number` | Initial pool capacity (`table.create`) |
+| `preAllocSize` | `number` | Initial pool capacity |
 | `createFn` | `() -> T` | Factory for new objects |
 | `resetFn` | `((T) -> ())?` | Optional reset function called on return |
 
@@ -25,8 +25,8 @@ Callable: `pool() -> T` acquires an object; `pool(obj)` returns it.
 
 | Method | Signature | Description |
 |--------|-----------|-------------|
-| `pool()` | `() -> T` | Acquire — pop from pool or call `createFn` |
-| `pool(obj)` | `(T) -> ()` | Return — push back, runs `resetFn` if set |
+| `pool()` | `() -> T` | Acquire an object |
+| `pool(obj)` | `(T) -> ()` | Return an object to the pool |
 | `collect` | `() -> { T }` | Get the underlying pool table |
 | `clear` | `() -> ()` | Empty the pool |
 

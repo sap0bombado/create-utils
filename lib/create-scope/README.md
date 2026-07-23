@@ -1,6 +1,6 @@
 # create-scope
 
-RAII-style resource cleanup. Track Instances, connections, threads, functions, and tables with cleanup methods — then clean them all at once by calling `scope()` with no arguments.
+Resource cleanup. Track Instances, connections, threads, and functions — clean them all at once by calling `scope()`.
 
 ## Install
 
@@ -15,21 +15,14 @@ createScope = "sap0bombado/create-scope@0.1.1"
 
 | Param | Type | Description |
 |-------|------|-------------|
-| `size` | `number?` | Pre-allocate memory for N items |
+| `size` | `number?` | Initial capacity |
 | `...` | `T...` | Initial items to track (returned as extra values) |
 
 ### `Scope`
 
 Callable: `scope(item) -> item` tracks an item; `scope()` cleans up all items.
 
-Cleanup dispatch order:
-
-1. **Table** — tries `:Destroy()`, `:Clear()`, `:Delete()`, `:StopAll()`, `:Stop()`, `:DisconnectAll()`, `:Disconnect()`, `:Unbind()`, `:RemoveAll()`, `:Remove()` (case-insensitive first-letter variant too)
-2. **Instance** — calls `:Destroy()`
-3. **RBXScriptConnection** — calls `:Disconnect()`
-4. **function** — calls it directly
-5. **thread** — calls `task.cancel()`
-6. Unknown — warns with traceback
+Cleans items by type: Instance (`:Destroy`), RBXScriptConnection (`:Disconnect`), function (call it), thread (`task.cancel`), table (tries common cleanup methods like `:Destroy`, `:Disconnect`, etc.).
 
 ## Example
 

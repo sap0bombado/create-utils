@@ -1,6 +1,6 @@
 # create-signal
 
-Fast, lightweight event emitter for Luau. Uses a doubly-linked list for O(1) connect/disconnect and a thread pool for async fire.
+Fast, lightweight event emitter for Luau.
 
 Benchmarked vs SignalPlus:
 
@@ -31,7 +31,7 @@ Creates a new signal.
 |--------|-----------|-------------|
 | `connect` | `(callback: (T...) -> ()) -> Connection` | Register a listener |
 | `once` | `(callback: (T...) -> ()) -> Connection` | Register a one-shot listener |
-| `fire` | `(...: T...) -> ()` | Fire the signal, calling all listeners async via `task.spawn` |
+| `fire` | `(...: T...) -> ()` | Fire the signal |
 | `wait` | `() -> T...` | Yield until the signal fires, returns the args |
 | `disconnectAll` | `() -> ()` | Remove all listeners |
 | `destroy` | `() -> ()` | Disconnect all and clear the signal table |

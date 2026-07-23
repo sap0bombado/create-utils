@@ -22,7 +22,7 @@ createThrottle = "sap0bombado/create-throttle@0.2.0"
 
 Callable: `throttle() -> boolean` checks if allowed; `throttle(newInterval)` changes the interval.
 
-First call always returns `true`. Throws if `timeFunction` returns a value smaller than the last recorded time (prevents broken throttles from clock drift).
+First call always returns `true`.
 
 ## Example
 
