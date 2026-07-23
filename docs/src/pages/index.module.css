@@ -1,0 +1,100 @@
+.heroBanner {
+  padding: 6rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #5b21b6, #7c3aed, #4c1d95);
+}
+
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.4) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(236, 72, 153, 0.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.35rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e9d5ff;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  animation: badgeFloat 6s ease-in-out infinite;
+}
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.ctaRow {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.liquidBtn {
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.liquidBtn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+  color: #fff;
+  text-decoration: none;
+}
+
+.githubBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  background: #fff;
+  color: #5b21b6;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(91, 33, 182, 0.3);
+}
+
+.githubBtn:hover {
+  transform: scale(1.05);
+  color: #5b21b6;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(91, 33, 182, 0.4);
+}
+
+.githubIcon {
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .heroBanner {
+    padding: 4rem 0;
+  }
+
+  .ctaRow {
+    flex-direction: column;
+    align-items: center;
+  }
+}

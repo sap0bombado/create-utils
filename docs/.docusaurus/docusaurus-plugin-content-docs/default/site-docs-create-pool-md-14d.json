@@ -5,7 +5,7 @@
   "source": "@site/docs/create-pool.md",
   "sourceDirName": ".",
   "slug": "/create-pool",
-  "permalink": "/create-utils/create-pool",
+  "permalink": "/create-utils/docs/create-pool",
   "draft": false,
   "unlisted": false,
   "tags": [],
@@ -14,10 +14,10 @@
   "sidebar": "docs",
   "previous": {
     "title": "create-scope",
-    "permalink": "/create-utils/create-scope"
+    "permalink": "/create-utils/docs/create-scope"
   },
   "next": {
     "title": "create-input",
-    "permalink": "/create-utils/create-input"
+    "permalink": "/create-utils/docs/create-input"
   }
 }

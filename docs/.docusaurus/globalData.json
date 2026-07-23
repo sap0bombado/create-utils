@@ -1,56 +1,52 @@
 {
   "docusaurus-plugin-content-docs": {
     "default": {
-      "path": "/create-utils/",
+      "path": "/create-utils/docs",
       "versions": [
         {
           "name": "current",
           "label": "Next",
           "isLast": true,
-          "path": "/create-utils/",
-          "mainDocId": "index",
+          "path": "/create-utils/docs",
+          "mainDocId": "intro",
           "docs": [
             {
               "id": "create-input",
-              "path": "/create-utils/create-input",
+              "path": "/create-utils/docs/create-input",
               "sidebar": "docs"
             },
             {
               "id": "create-pool",
-              "path": "/create-utils/create-pool",
+              "path": "/create-utils/docs/create-pool",
               "sidebar": "docs"
             },
             {
               "id": "create-scope",
-              "path": "/create-utils/create-scope",
+              "path": "/create-utils/docs/create-scope",
               "sidebar": "docs"
             },
             {
               "id": "create-signal",
-              "path": "/create-utils/create-signal",
+              "path": "/create-utils/docs/create-signal",
               "sidebar": "docs"
             },
             {
               "id": "create-throttle",
-              "path": "/create-utils/create-throttle",
-              "sidebar": "docs"
-            },
-            {
-              "id": "index",
-              "path": "/create-utils/",
+              "path": "/create-utils/docs/create-throttle",
               "sidebar": "docs"
             },
             {
               "id": "intro",
-              "path": "/create-utils/intro"
+              "path": "/create-utils/docs/intro",
+              "sidebar": "docs"
             }
           ],
           "draftIds": [],
           "sidebars": {
             "docs": {
               "link": {
-                "path": "/create-utils/",
-                "label": "index"
+                "path": "/create-utils/docs/intro",
+                "label": "intro"
               }
             }
           }

@@ -43,7 +43,6 @@ export default {
       "@docusaurus/preset-classic",
       {
         "docs": {
-          "routeBasePath": "/",
           "sidebarPath": "./sidebars.js"
         },
         "blog": false,
@@ -54,42 +53,76 @@ export default {
     ]
   ],
   "themeConfig": {
+    "image": "img/logo.png",
     "colorMode": {
       "defaultMode": "dark",
-      "respectPrefersColorScheme": true,
+      "respectPrefersColorScheme": false,
       "disableSwitch": false
     },
     "navbar": {
       "title": "create-utils",
       "items": [
         {
+          "type": "docSidebar",
+          "sidebarId": "docs",
+          "position": "left",
+          "label": "Docs"
+        },
+        {
           "href": "https://github.com/sap0bombado/create-utils",
-          "label": "GitHub",
-          "position": "right"
+          "position": "right",
+          "className": "header-github-link",
+          "aria-label": "GitHub repository"
         }
       ],
       "hideOnScroll": false
     },
     "footer": {
       "style": "dark",
-      "copyright": "MIT © 2026 Diego Bandeira",
-      "links": []
+      "links": [
+        {
+          "title": "Docs",
+          "items": [
+            {
+              "label": "create-signal",
+              "to": "/docs/create-signal"
+            },
+            {
+              "label": "create-scope",
+              "to": "/docs/create-scope"
+            },
+            {
+              "label": "create-pool",
+              "to": "/docs/create-pool"
+            },
+            {
+              "label": "create-input",
+              "to": "/docs/create-input"
+            },
+            {
+              "label": "create-throttle",
+              "to": "/docs/create-throttle"
+            }
+          ]
+        },
+        {
+          "title": "More",
+          "items": [
+            {
+              "label": "GitHub",
+              "href": "https://github.com/sap0bombado/create-utils"
+            }
+          ]
+        }
+      ],
+      "copyright": "MIT © 2026 Diego Bandeira"
     },
-    "docs": {
-      "versionPersistence": "localStorage",
-      "sidebar": {
-        "hideable": false,
-        "autoCollapseCategories": false
-      }
-    },
-    "blog": {
-      "sidebar": {
-        "groupByYear": true
-      }
-    },
-    "metadata": [],
     "prism": {
-      "additionalLanguages": [],
+      "additionalLanguages": [
+        "lua",
+        "toml",
+        "bash"
+      ],
       "theme": {
         "plain": {
           "color": "#bfc7d5",
@@ -230,6 +263,19 @@ export default {
         }
       ]
     },
+    "docs": {
+      "versionPersistence": "localStorage",
+      "sidebar": {
+        "hideable": false,
+        "autoCollapseCategories": false
+      }
+    },
+    "blog": {
+      "sidebar": {
+        "groupByYear": true
+      }
+    },
+    "metadata": [],
     "tableOfContents": {
       "minHeadingLevel": 2,
       "maxHeadingLevel": 3

@@ -3,55 +3,50 @@ import ComponentCreator from '@docusaurus/ComponentCreator';
 
 export default [
   {
-    path: '/create-utils/',
-    component: ComponentCreator('/create-utils/', 'aed'),
+    path: '/create-utils/docs',
+    component: ComponentCreator('/create-utils/docs', '2bb'),
     routes: [
       {
-        path: '/create-utils/',
-        component: ComponentCreator('/create-utils/', 'f8c'),
+        path: '/create-utils/docs',
+        component: ComponentCreator('/create-utils/docs', 'e5a'),
         routes: [
           {
-            path: '/create-utils/',
-            component: ComponentCreator('/create-utils/', '765'),
+            path: '/create-utils/docs',
+            component: ComponentCreator('/create-utils/docs', '3c1'),
             routes: [
               {
-                path: '/create-utils/create-input',
-                component: ComponentCreator('/create-utils/create-input', '215'),
+                path: '/create-utils/docs/create-input',
+                component: ComponentCreator('/create-utils/docs/create-input', '809'),
                 exact: true,
                 sidebar: "docs"
               },
               {
-                path: '/create-utils/create-pool',
-                component: ComponentCreator('/create-utils/create-pool', '8b4'),
+                path: '/create-utils/docs/create-pool',
+                component: ComponentCreator('/create-utils/docs/create-pool', 'aac'),
                 exact: true,
                 sidebar: "docs"
               },
               {
-                path: '/create-utils/create-scope',
-                component: ComponentCreator('/create-utils/create-scope', 'd90'),
+                path: '/create-utils/docs/create-scope',
+                component: ComponentCreator('/create-utils/docs/create-scope', 'eff'),
                 exact: true,
                 sidebar: "docs"
               },
               {
-                path: '/create-utils/create-signal',
-                component: ComponentCreator('/create-utils/create-signal', 'd5d'),
+                path: '/create-utils/docs/create-signal',
+                component: ComponentCreator('/create-utils/docs/create-signal', '751'),
                 exact: true,
                 sidebar: "docs"
               },
               {
-                path: '/create-utils/create-throttle',
-                component: ComponentCreator('/create-utils/create-throttle', 'eae'),
+                path: '/create-utils/docs/create-throttle',
+                component: ComponentCreator('/create-utils/docs/create-throttle', '911'),
                 exact: true,
                 sidebar: "docs"
               },
               {
-                path: '/create-utils/intro',
-                component: ComponentCreator('/create-utils/intro', 'e74'),
-                exact: true
-              },
-              {
-                path: '/create-utils/',
-                component: ComponentCreator('/create-utils/', '93f'),
+                path: '/create-utils/docs/intro',
+                component: ComponentCreator('/create-utils/docs/intro', '8a9'),
                 exact: true,
                 sidebar: "docs"
               }
@@ -60,6 +55,11 @@ export default [
         ]
       }
     ]
+  },
+  {
+    path: '/create-utils/',
+    component: ComponentCreator('/create-utils/', '3ba'),
+    exact: true
   },
   {
     path: '*',

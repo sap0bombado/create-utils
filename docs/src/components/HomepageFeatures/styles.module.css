@@ -1,0 +1,71 @@
+.features {
+  padding: 4rem 0;
+}
+
+.featureCard {
+  height: 100%;
+  padding: 2rem 1rem;
+  border-radius: 1rem;
+  background: rgba(124, 58, 237, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.featureCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.featureCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(124, 58, 237, 0.15);
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+[data-theme='dark'] .featureCard {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: rgba(124, 58, 237, 0.15);
+}
+
+[data-theme='dark'] .featureCard:hover {
+  box-shadow: 0 12px 40px rgba(124, 58, 237, 0.25);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.icon {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 1rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(124, 58, 237, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.iconDot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #b55bae, #7c3aed);
+  box-shadow: 0 0 12px rgba(181, 91, 174, 0.5);
+}
+
+.featureTitle {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.featureText {
+  opacity: 0.9;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
