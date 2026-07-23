@@ -1,5 +1,7 @@
 # create-utils
 
+[![Docs](https://img.shields.io/badge/docs-site-green)](https://sap0bombado.github.io/create-utils/)
+
 Collection of lightweight Luau utility libraries for Roblox.
 
 Each library exports a single `create*` factory function that returns a callable object — no classes, no inheritance, just closures and tables.
