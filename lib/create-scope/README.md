@@ -1,37 +1,56 @@
-## Basic Usage
-```luau
-local createScope = require("@pkg/createScope")
+# create-scope
 
--- Create a scope (optionally pass the alloc size and/or initial items)
-local scope, part = createScope(6, Instance.new("Part"), ...)
+RAII-style resource cleanup. Track Instances, connections, threads, functions, and tables with cleanup methods — then clean them all at once by calling `scope()` with no arguments.
 
--- Track an Instance (will call :Destroy())
+## Install
+
+```toml
+[dependencies]
+createScope = "sap0bombado/create-scope@0.1.1"
+```
+
+## API
+
+### `createScope(size?, ...) -> (Scope, T...)`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `size` | `number?` | Pre-allocate memory for N items |
+| `...` | `T...` | Initial items to track (returned as extra values) |
+
+### `Scope`
+
+Callable: `scope(item) -> item` tracks an item; `scope()` cleans up all items.
+
+Cleanup dispatch order:
+
+1. **Table** — tries `:Destroy()`, `:Clear()`, `:Delete()`, `:StopAll()`, `:Stop()`, `:DisconnectAll()`, `:Disconnect()`, `:Unbind()`, `:RemoveAll()`, `:Remove()` (case-insensitive first-letter variant too)
+2. **Instance** — calls `:Destroy()`
+3. **RBXScriptConnection** — calls `:Disconnect()`
+4. **function** — calls it directly
+5. **thread** — calls `task.cancel()`
+6. Unknown — warns with traceback
+
+## Example
+
+```lua
+local scope = createScope()
+
 local part = scope(Instance.new("Part"))
 part.Parent = workspace
 
--- Track a connection directly (will call :Disconnect())
 local conn = scope(RunService.Heartbeat:Connect(function(dt)
-	print("Heartbeat", dt)
+    print("Heartbeat", dt)
 end))
 
--- Track a cleanup function (will be called)
 scope(function()
-	print("Custom cleanup ran")
+    print("Custom cleanup")
 end)
 
--- Track a thread
-local thread = scope(task.spawn(function()
-	while true do
-		task.wait(1)
-	end
-end))
-
--- When you're done, call with no args to clean everything
+-- Clean everything
 scope()
 ```
 
-## Install
-Add as a Wally dependency:
-```toml
-createScope = "sap0bombado/create-scope@0.1.1"
-```
+## License
+
+MIT

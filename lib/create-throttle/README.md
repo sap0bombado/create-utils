@@ -1,32 +1,45 @@
-## Basic Usage
-```luau
---!strict
-local createThrottle = require("@pkg/createThrottle")
+# create-throttle
 
--- Create a throttle with a 2-second interval
-local throttle = createThrottle(2, os.clock)
-
--- Example event loop
-while true do
-	task.wait(0.2)
-
-	-- Call throttle like a function to check if it's allowed
-	if throttle() == true then
-		print("Action allowed at:", os.clock())
-	else
-		print("Blocked by throttle")
-	end
-end
-
--- Changing interval dynamically
-task.delay(3, function()
-	throttle(0.5) -- make it faster after 10 seconds
-	print("Throttle interval changed to 0.5s")
-end)
-```
+Time-based rate limiter. Call `throttle()` — returns `true` if enough time has elapsed, `false` otherwise.
 
 ## Install
-Add as a Wally dependency:
+
 ```toml
+[dependencies]
 createThrottle = "sap0bombado/create-throttle@0.2.0"
 ```
+
+## API
+
+### `createThrottle(interval, timeFunction?) -> Throttle`
+
+| Param | Type | Default | Description |
+|-------|------|---------|-------------|
+| `interval` | `number` | — | Minimum seconds between allowed calls |
+| `timeFunction` | `() -> number` | `os.clock` | Time source |
+
+### `Throttle`
+
+Callable: `throttle() -> boolean` checks if allowed; `throttle(newInterval)` changes the interval.
+
+First call always returns `true`. Throws if `timeFunction` returns a value smaller than the last recorded time (prevents broken throttles from clock drift).
+
+## Example
+
+```lua
+local throttle = createThrottle(2)
+
+while true do
+    task.wait(0.2)
+    if throttle() then
+        print("Action allowed")
+    end
+end
+
+-- Change interval dynamically
+throttle(0.5)
+```
+
+## License
+
+MIT

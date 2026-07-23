@@ -1,43 +1,56 @@
-## Basic Usage
-```luau
---!strict
-local createPool = require("@pkg/createPool")
+# create-pool
 
-local pool = createPool(
-	32, -- preAlloc size
-
-	-- create function
-	function()
-		return Instance.new("Part")
-	end,
-	-- optional reset function
-	function(part: Part)
-		part.Parent = nil
-		part.Position = Vector3.zero
-	end
-)
-
--- Acquire an object from the pool
-local part = pool()
-part.Position = Vector3.new(0, 10, 0)
-
--- Return the object back to the pool
-pool(part)
-
--- Reuse the same object later
-local reusedPart = pool()
-print(reusedPart.Position) -- 0, 0, 0
-
--- Cleanup Pool:
-for _, part in pool:collect() do
-	task.defer(part.Destroy, part)
-end
-pool:clear()
-
-```
+Object pool. Pre-allocates objects and reuses them to reduce GC pressure.
 
 ## Install
-Add as a Wally dependency:
+
 ```toml
+[dependencies]
 createPool = "sap0bombado/create-pool@0.3.1"
 ```
+
+## API
+
+### `createPool<T>(preAllocSize, createFn, resetFn?) -> Pool<T>`
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `preAllocSize` | `number` | Initial pool capacity (`table.create`) |
+| `createFn` | `() -> T` | Factory for new objects |
+| `resetFn` | `((T) -> ())?` | Optional reset function called on return |
+
+### `Pool<T>`
+
+Callable: `pool() -> T` acquires an object; `pool(obj)` returns it.
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `pool()` | `() -> T` | Acquire — pop from pool or call `createFn` |
+| `pool(obj)` | `(T) -> ()` | Return — push back, runs `resetFn` if set |
+| `collect` | `() -> { T }` | Get the underlying pool table |
+| `clear` | `() -> ()` | Empty the pool |
+
+## Example
+
+```lua
+local pool = createPool(32, function()
+    return Instance.new("Part")
+end, function(part)
+    part.Parent = nil
+    part.Position = Vector3.zero
+end)
+
+local part = pool()
+part.Position = Vector3.new(0, 10, 0)
+pool(part)
+
+-- Cleanup
+for _, v in pool:collect() do
+    v:Destroy()
+end
+pool:clear()
+```
+
+## License
+
+MIT

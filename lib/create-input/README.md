@@ -1,17 +1,44 @@
-## Basic Usage
-```luau
-local createInput = require("@pkg/createInput")
+# create-input
 
-createInput(Enum.KeyCode OR Enum.UserInputType, Enum.UserInputState?, gameProcessed?): createSignal.Signal
+Roblox `UserInputService` wrapper. Instead of filtering `InputBegan`/`InputEnded` globally, get a `Signal` that fires only for the input you specify.
 
-local conn = createInput(Enum.UserInputType.MouseButton1, Enum.UserInputState.End, ):connect(function(inputObject: InputObject)
-    print('Click! ', inputObject)
+The first call lazily creates a single global listener on `UserInputService`. Subsequent calls reuse it.
+
+## Install
+
+```toml
+[dependencies]
+createInput = "sap0bombado/create-input@0.1.1"
+```
+
+**Dependencies:** `create-signal@1.3.0`, `create-scope@0.1.1`
+
+## API
+
+### `createInput(input, state?, gameProcessed?) -> Signal<InputObject>`
+
+| Param | Type | Default | Description |
+|-------|------|---------|-------------|
+| `input` | `Enum.KeyCode \| Enum.UserInputType` | (required) | Key or input type |
+| `state` | `Enum.UserInputState?` | `Begin` | Input state to match |
+| `gameProcessed` | `boolean?` | `false` | Include game-processed inputs |
+
+Returns a `Signal<InputObject>` with `.connect()`, `.once()`, `.fire()`, `.wait()`, `.disconnectAll()`.
+
+## Example
+
+```lua
+local onJump = createInput(Enum.KeyCode.Space)
+onJump:connect(function(inputObject)
+    print("Jump!")
+end)
+
+local onClick = createInput(Enum.UserInputType.MouseButton1, Enum.UserInputState.End)
+onClick:connect(function()
+    print("Click released")
 end)
 ```
 
-## Install
-Add as a Wally dependency:
+## License
 
-```toml
-createInput = "sap0bombado/create-input@0.1.0"
-```
+MIT
