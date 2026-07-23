@@ -5,7 +5,7 @@
   "source": "@site/docs/create-scope.md",
   "sourceDirName": ".",
   "slug": "/create-scope",
-  "permalink": "/create-utils/docs/create-scope",
+  "permalink": "/create-utils/create-scope",
   "draft": false,
   "unlisted": false,
   "tags": [],
@@ -14,10 +14,10 @@
   "sidebar": "docs",
   "previous": {
     "title": "create-signal",
-    "permalink": "/create-utils/docs/create-signal"
+    "permalink": "/create-utils/create-signal"
   },
   "next": {
     "title": "create-pool",
-    "permalink": "/create-utils/docs/create-pool"
+    "permalink": "/create-utils/create-pool"
   }
 }

@@ -43,6 +43,7 @@ export default {
       "@docusaurus/preset-classic",
       {
         "docs": {
+          "routeBasePath": "/",
           "sidebarPath": "./sidebars.js"
         },
         "blog": false,
@@ -53,15 +54,14 @@ export default {
     ]
   ],
   "themeConfig": {
+    "colorMode": {
+      "defaultMode": "dark",
+      "respectPrefersColorScheme": true,
+      "disableSwitch": false
+    },
     "navbar": {
       "title": "create-utils",
       "items": [
-        {
-          "type": "docSidebar",
-          "sidebarId": "docs",
-          "position": "left",
-          "label": "Docs"
-        },
         {
           "href": "https://github.com/sap0bombado/create-utils",
           "label": "GitHub",
@@ -74,11 +74,6 @@ export default {
       "style": "dark",
       "copyright": "MIT © 2026 Diego Bandeira",
       "links": []
-    },
-    "colorMode": {
-      "defaultMode": "light",
-      "disableSwitch": false,
-      "respectPrefersColorScheme": false
     },
     "docs": {
       "versionPersistence": "localStorage",

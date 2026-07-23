@@ -19,6 +19,7 @@ const config = {
       '@docusaurus/preset-classic',
       {
         docs: {
+          routeBasePath: '/',
           sidebarPath: './sidebars.js',
         },
         blog: false,
@@ -27,10 +28,13 @@ const config = {
     ],
   ],
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark',
+      respectPrefersColorScheme: true,
+    },
     navbar: {
       title: 'create-utils',
       items: [
-        { type: 'docSidebar', sidebarId: 'docs', position: 'left', label: 'Docs' },
         { href: 'https://github.com/sap0bombado/create-utils', label: 'GitHub', position: 'right' },
       ],
     },

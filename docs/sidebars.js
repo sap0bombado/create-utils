@@ -1,6 +1,6 @@
 const sidebars = {
   docs: [
-    'intro',
+    'index',
     'create-signal',
     'create-scope',
     'create-pool',

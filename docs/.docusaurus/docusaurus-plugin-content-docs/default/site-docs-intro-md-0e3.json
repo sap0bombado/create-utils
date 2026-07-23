@@ -5,15 +5,10 @@
   "source": "@site/docs/intro.md",
   "sourceDirName": ".",
   "slug": "/intro",
-  "permalink": "/create-utils/docs/intro",
+  "permalink": "/create-utils/intro",
   "draft": false,
   "unlisted": false,
   "tags": [],
   "version": "current",
-  "frontMatter": {},
-  "sidebar": "docs",
-  "next": {
-    "title": "create-signal",
-    "permalink": "/create-utils/docs/create-signal"
-  }
+  "frontMatter": {}
 }

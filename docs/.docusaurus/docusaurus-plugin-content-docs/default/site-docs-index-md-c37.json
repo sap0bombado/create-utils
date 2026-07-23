@@ -1,0 +1,19 @@
+{
+  "id": "index",
+  "title": "create-utils",
+  "description": "Collection of lightweight Luau utility libraries for Roblox.",
+  "source": "@site/docs/index.md",
+  "sourceDirName": ".",
+  "slug": "/",
+  "permalink": "/create-utils/",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "docs",
+  "next": {
+    "title": "create-signal",
+    "permalink": "/create-utils/create-signal"
+  }
+}
