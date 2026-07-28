@@ -1,11 +1,19 @@
 [package]
 authors = ["sapobombado"]
 exclude = ["**"]
-include = ["src", "src/**", "wally.toml", "wally.lock", "default.project.json", "LICENSE", "README.md"]
+include = [
+    "src",
+    "src/**",
+    "wally.toml",
+    "wally.lock",
+    "default.project.json",
+    "LICENSE",
+    "README.md",
+]
 license = "MIT"
 name = "sap0bombado/create-scope"
 realm = "shared"
 registry = "https://github.com/UpliftGames/wally-index"
-version = "0.1.1"
+version = "0.2.0"
 
 [dependencies]

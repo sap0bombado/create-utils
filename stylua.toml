@@ -1,11 +1,8 @@
 syntax = "Luau"
-column_width = 80
-line_endings = "Unix"
-indent_type = "Spaces"
-indent_width = 4
-quote_style = "ForceDouble"
-call_parentheses = "Input"
-collapse_simple_statement = "Never"
+quote_style = "ForceSingle"
+call_parentheses = "None"
+collapse_simple_statement = "Always"
+column_width = 175
 
 [sort_requires]
 enabled = true

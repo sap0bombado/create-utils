@@ -25,30 +25,27 @@
 	SOFTWARE.
 --]]
 local ORDERED_METHOD_NAMES: { string } = {
-	"Destroy",
-	"Clear",
-	"Delete",
-	"StopAll",
-	"Stop",
-	"DisconnectAll",
-	"Disconnect",
-	"Unbind",
-	"RemoveAll",
-	"Remove",
+	'Destroy',
+	'Clear',
+	'Delete',
+	'StopAll',
+	'Stop',
+	'DisconnectAll',
+	'Disconnect',
+	'Unbind',
+	'RemoveAll',
+	'Remove',
 }
 
 local function clean(scopeTraceback: string, item: any)
 	local typeOfItem = typeof(item)
 
-	if typeOfItem == "table" then
+	if typeOfItem == 'table' then
 		local foundMethod = false
 
 		for _, methodName: string in ORDERED_METHOD_NAMES do
-			local method: ((any) -> ())? = item[methodName] or item[methodName:gsub("^%l", string.lower, 1)]
-
-			if method == nil or typeof(method) ~= "function" then
-				continue
-			end
+			local method: ((any) -> ())? = item[methodName] or item[methodName:gsub('^%u', string.lower, 1)]
+			if method == nil or typeof(method) ~= 'function' then continue end
 
 			method(item)
 			foundMethod = true
@@ -56,21 +53,19 @@ local function clean(scopeTraceback: string, item: any)
 			break
 		end
 
-		if foundMethod == true then
-			return
-		end
+		if foundMethod == true then return end
 
-		warn("Couldn't find a cleanup method for object:", item, "\nScope created at:", scopeTraceback)
-	elseif typeOfItem == "Instance" then
+		warn('Couldn\'t find a cleanup method for object:', item, '\nScope created at:', scopeTraceback)
+	elseif typeOfItem == 'Instance' then
 		(item :: Instance):Destroy()
-	elseif typeOfItem == "RBXScriptConnection" then
+	elseif typeOfItem == 'RBXScriptConnection' then
 		(item :: RBXScriptConnection):Disconnect()
-	elseif typeOfItem == "function" then
+	elseif typeOfItem == 'function' then
 		item()
-	elseif typeOfItem == "thread" then
+	elseif typeOfItem == 'thread' then
 		task.cancel(item)
 	else
-		warn(`Unknown type: {typeOfItem} value: `, item, "\nScope created at:", scopeTraceback)
+		warn(`Unknown type: {typeOfItem} value: `, item, '\nScope created at:', scopeTraceback)
 	end
 end
 
@@ -98,7 +93,7 @@ local function createScope<T...>(size: number?, ...: T...): (Scope, T...)
 	add(scopeMemory, { ... })
 
 	return function<T...>(...: T...): T...
-		if select("#", ...) == 0 then
+		if select('#', ...) == 0 then
 			cleanup(scopeTraceback, scopeMemory)
 			return nil :: any
 		end
