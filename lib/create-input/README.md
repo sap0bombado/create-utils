@@ -36,7 +36,3 @@ onClick:connect(function()
     print("Click released")
 end)
 ```
-
-## License
-
-MIT

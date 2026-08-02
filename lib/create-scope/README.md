@@ -1,6 +1,6 @@
 # create-scope
 
-Resource cleanup. Track Instances, connections, threads, and functions — clean them all at once by calling `scope()`.
+Resource cleanup. Track Instances, connections, threads, and functions, clean them all at once by calling `scope()`.
 
 ## Install
 
@@ -43,7 +43,3 @@ end)
 -- Clean everything
 scope()
 ```
-
-## License
-
-MIT

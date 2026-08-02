@@ -4,8 +4,6 @@
 
 Collection of lightweight Luau utility libraries for Roblox.
 
-Each library exports a single `create*` factory function that returns a callable object — no classes, no inheritance, just closures and tables.
-
 ## Install
 
 Add individual libraries to your `wally.toml`:
@@ -29,6 +27,3 @@ createThrottle = "sap0bombado/create-throttle@0.2.0"
 | [create-input](lib/create-input) | 0.1.1 | Roblox UserInputService Wrapper |
 | [create-throttle](lib/create-throttle) | 0.2.0 | Rate limiter |
 
-## License
-
-MIT © Diego Bandeira

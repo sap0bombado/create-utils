@@ -50,7 +50,3 @@ for _, v in pool:collect() do
 end
 pool:clear()
 ```
-
-## License
-
-MIT

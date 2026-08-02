@@ -40,6 +40,3 @@ end
 throttle(0.5)
 ```
 
-## License
-
-MIT

@@ -55,6 +55,3 @@ end)
 signal:fire("John", 23)
 ```
 
-## License
-
-MIT
