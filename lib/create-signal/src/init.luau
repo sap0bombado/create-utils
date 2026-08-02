@@ -9,9 +9,10 @@ export type Signal<T... = ...any> = {
 	connect: (self: Signal<T...>, callback: (T...) -> ()) -> Connection,
 	once: (self: Signal<T...>, callback: (T...) -> ()) -> Connection,
 	disconnectAll: (self: Signal<T...>) -> (),
+	destroy: (self: Signal<T...>) -> (),
 
 	fire: (self: Signal<T...>, T...) -> (),
-	wait: (self: Signal<T...>) -> T...,
+	wait: (self: Signal<T...>, timeout: number?) -> T...,
 }
 
 type InternalConnection = {
@@ -36,38 +37,36 @@ type InternalSignal = {
 	wait: (self: InternalSignal) -> ...any,
 }
 
-local freeThreads: { thread } = {}
+const freeThreads: { thread } = {}
 
 -- ** lib ** --
-local coroutineRuning = coroutine.running
-local coroutineCreate = coroutine.create
-local coroutineResume = coroutine.resume
-local coroutineYield = coroutine.yield
-local taskSpawn = task.spawn
-local tableInsert = table.insert
+const coroutineRuning = coroutine.running
+const coroutineCreate = coroutine.create
+const coroutineResume = coroutine.resume
+const coroutineYield = coroutine.yield
+const taskSpawn = task.spawn
+const tableInsert = table.insert
 
-local function run(callbackAsync: (...any) -> (), thread: thread, ...: any)
+const function run(callbackAsync: (...any) -> (), thread: thread, ...: any)
 	callbackAsync(...)
 	tableInsert(freeThreads, thread)
 end
 
-local function yielder()
+const function yielder()
 	while true do
 		run(coroutineYield())
 	end
 end
 
 -- ** connection impl ** --
-local function disconnect(self: InternalConnection)
-	if not self.connected then
-		return
-	end
+const function disconnect(self: InternalConnection)
+	if not self.connected then return end
 
 	self.connected = false
 
-	local signal = self._signal
-	local previous = self._previous
-	local _next = self._next
+	const signal = self._signal
+	const previous = self._previous
+	const _next = self._next
 
 	if previous then
 		previous._next = _next
@@ -83,11 +82,11 @@ local function disconnect(self: InternalConnection)
 end
 
 @native
-local function disconnectAll(self: InternalSignal)
+const function disconnectAll(self: InternalSignal)
 	local connection = self._tail
 
 	while connection do
-		local _next = connection._next
+		const _next = connection._next
 
 		connection.connected = false
 		connection._next = nil
@@ -100,16 +99,16 @@ local function disconnectAll(self: InternalSignal)
 	self._tail = nil
 end
 
-local function destroy(self: InternalSignal)
+const function destroy(self: InternalSignal)
 	disconnectAll(self)
 	table.clear(self)
 end
 
 -- ** signal impl ** --
-local function connect(self: InternalSignal, callback: (...any) -> ())
-	local head = self._head
+const function connect(self: InternalSignal, callback: (...any) -> ())
+	const head = self._head
 
-	local connection: InternalConnection = {
+	const connection: InternalConnection = {
 		_signal = self,
 		_previous = head,
 		_callback = callback,
@@ -129,10 +128,10 @@ local function connect(self: InternalSignal, callback: (...any) -> ())
 	return connection
 end
 
-local function once(self: InternalSignal, callback: (...any) -> ())
+const function once(self: InternalSignal, callback: (...any) -> ())
 	local connection: InternalConnection
 
-	local function connectListener(...: any)
+	const function connectListener(...: any)
 		disconnect(connection)
 		callback(...)
 	end
@@ -142,32 +141,44 @@ local function once(self: InternalSignal, callback: (...any) -> ())
 	return connection
 end
 
-local function _wait(self: InternalSignal): ...any
-	local runningThread = coroutineRuning()
+const function _wait(self: InternalSignal, timeout: number?): ...any
+	const runningThread = coroutineRuning()
+	local cancelled = false
+	local connection: InternalConnection
 
-	local function onceListener(...: any)
+	if timeout then task.delay(timeout, function()
+		if cancelled then return end
+
+		cancelled = true
+		connection:disconnect()
+		taskSpawn(runningThread)
+	end) end
+
+	const function onceListener(...: any)
+		if cancelled then return end
+		cancelled = true
 		taskSpawn(runningThread, ...)
 	end
 
-	once(self, onceListener)
+	connection = once(self, onceListener)
 
 	return coroutineYield()
 end
 
 @native
-local function fire(self: InternalSignal, ...: any)
+const function fire(self: InternalSignal, ...: any)
 	local connection = self._tail
 
 	while connection do
-		local threadLength = #freeThreads
+		const threadLength = #freeThreads
 
 		if threadLength == 0 then
-			local thread = coroutineCreate(yielder)
+			const thread = coroutineCreate(yielder)
 			coroutineResume(thread)
 
 			taskSpawn(thread, connection._callback, thread, ...)
 		else
-			local thread = freeThreads[threadLength]
+			const thread = freeThreads[threadLength]
 			freeThreads[threadLength] = nil
 
 			taskSpawn(thread, connection._callback, thread, ...)
@@ -177,7 +188,7 @@ local function fire(self: InternalSignal, ...: any)
 	end
 end
 
-local function createSignal<T...>(): Signal<T...>
+const function createSignal<T...>(): Signal<T...>
 	return {
 		connect = connect,
 		once = once,

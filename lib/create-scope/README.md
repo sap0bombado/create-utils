@@ -6,7 +6,7 @@ Resource cleanup. Track Instances, connections, threads, and functions — clean
 
 ```toml
 [dependencies]
-createScope = "sap0bombado/create-scope@0.1.1"
+createScope = "sap0bombado/create-scope@0.2.0"
 ```
 
 ## API
