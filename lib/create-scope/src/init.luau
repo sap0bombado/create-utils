@@ -1,4 +1,5 @@
 --!strict
+--!optimize 2
 --[[
 	Creates a memory object that can be used to store and clean up resources.
 
@@ -24,38 +25,48 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 --]]
-local ORDERED_METHOD_NAMES: { string } = {
-	'Destroy',
-	'Clear',
-	'Delete',
-	'StopAll',
-	'Stop',
-	'DisconnectAll',
-	'Disconnect',
-	'Unbind',
-	'RemoveAll',
-	'Remove',
-}
 
-local function clean(scopeTraceback: string, item: any)
+local function resolve(item: any): ((any) -> ())?
+	local m = item.Destroy
+	if m and typeof(m) == 'function' then return m :: (any) -> () end
+
+	m = item.destroy
+	if m and typeof(m) == 'function' then return m :: (any) -> () end
+
+	m = item.DisconnectAll
+	if m and typeof(m) == 'function' then return m :: (any) -> () end
+
+	m = item.disconnectAll
+	if m and typeof(m) == 'function' then return m :: (any) -> () end
+
+	m = item.Disconnect
+	if m and typeof(m) == 'function' then return m :: (any) -> () end
+
+	m = item.disconnect
+	if m and typeof(m) == 'function' then return m :: (any) -> () end
+
+	m = item.Cleanup
+	if m and typeof(m) == 'function' then return m :: (any) -> () end
+
+	m = item.cleanup
+	if m and typeof(m) == 'function' then return m :: (any) -> () end
+
+	return nil
+end
+
+@native
+local function clean(item: any)
 	local typeOfItem = typeof(item)
 
-	if typeOfItem == 'table' then
-		local foundMethod = false
+	if typeOfItem == 'table' or typeOfItem == 'userdata' then
+		local method = resolve(item)
 
-		for _, methodName: string in ORDERED_METHOD_NAMES do
-			local method: ((any) -> ())? = item[methodName] or item[methodName:gsub('^%u', string.lower, 1)]
-			if method == nil or typeof(method) ~= 'function' then continue end
-
+		if method then
 			method(item)
-			foundMethod = true
-
-			break
+			return
 		end
 
-		if foundMethod == true then return end
-
-		warn('Couldn\'t find a cleanup method for object:', item, '\nScope created at:', scopeTraceback)
+		error('Couldn\'t find a cleanup method for object:', item)
 	elseif typeOfItem == 'Instance' then
 		(item :: Instance):Destroy()
 	elseif typeOfItem == 'RBXScriptConnection' then
@@ -65,44 +76,47 @@ local function clean(scopeTraceback: string, item: any)
 	elseif typeOfItem == 'thread' then
 		task.cancel(item)
 	else
-		warn(`Unknown type: {typeOfItem} value: `, item, '\nScope created at:', scopeTraceback)
+		error(`Unknown type: {typeOfItem} value: `, item)
 	end
 end
 
-local function cleanup(scopeTraceback: string, memory: { unknown })
+@native
+local function cleanup(memory: { any })
 	for i = #memory, 1, -1 do
-		clean(scopeTraceback, memory[i])
-		memory[i] = nil
+		clean(memory[i])
 	end
 
 	table.clear(memory)
 end
 
-local function add(memory: { unknown }, items: { unknown })
-	for _, item: any in items do
-		table.insert(memory, item)
+@native
+local function add(memory: { any }, ...: any)
+	local mlen = #memory
+	local n = select('#', ...)
+	for i = 1, n do
+		memory[1 + mlen] = select(i, ...)
 	end
 end
 
 export type Scope = <T...>(T...) -> T...
 
 local function createScope<T...>(size: number?, ...: T...): (Scope, T...)
-	local scopeTraceback = debug.traceback(nil, 2)
-	local scopeMemory: { any } = size ~= nil and table.create(size) or {}
+	local memory: { any } = size ~= nil and table.create(size) or {}
 
-	add(scopeMemory, { ... })
+	add(memory, ...)
 
-	return function<T...>(...: T...): T...
+	local function scope<U...>(...: U...): U...
 		if select('#', ...) == 0 then
-			cleanup(scopeTraceback, scopeMemory)
+			cleanup(memory)
 			return nil :: any
 		end
 
-		add(scopeMemory, { ... })
+		add(memory, ...)
 
 		return ...
-	end,
-		...
+	end
+
+	return scope, ...
 end
 
 return createScope
