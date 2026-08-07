@@ -15,6 +15,6 @@ license = "MIT"
 name = "sap0bombado/create-signal"
 realm = "shared"
 registry = "https://github.com/UpliftGames/wally-index"
-version = "1.4.2"
+version = "1.4.3"
 
 [dependencies]
