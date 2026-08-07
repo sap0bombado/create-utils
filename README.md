@@ -10,7 +10,7 @@ Add individual libraries to your `wally.toml`:
 
 ```toml
 [dependencies]
-createSignal = "sap0bombado/create-signal@1.4.1"
+createSignal = "sap0bombado/create-signal@1.4.2"
 createScope = "sap0bombado/create-scope@0.3.0"
 createPool = "sap0bombado/create-pool@0.3.1"
 createInput = "sap0bombado/create-input@0.1.1"

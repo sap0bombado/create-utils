@@ -16,7 +16,7 @@ Benchmarked vs SignalPlus:
 
 ```toml
 [dependencies]
-createSignal = "sap0bombado/create-signal@1.4.1"
+createSignal = "sap0bombado/create-signal@1.4.2"
 ```
 
 ## API

@@ -5,13 +5,20 @@ export type Connection = {
 	disconnect: (self: Connection) -> (),
 }
 
-export type Signal<T... = ...any> = {
-	connect: (self: Signal<T...>, callback: (T...) -> ()) -> Connection,
-	once: (self: Signal<T...>, callback: (T...) -> ()) -> Connection,
+export type Signal<T... = ...any> = ConnectPermission<T...> & FirePermission<T...> & DestroyPermission<T...>
+
+export type DestroyPermission<T... = ...any> = {
 	disconnectAll: (self: Signal<T...>) -> (),
 	destroy: (self: Signal<T...>) -> (),
+}
 
+export type FirePermission<T... = ...any> = {
 	fire: (self: Signal<T...>, T...) -> (),
+}
+
+export type ConnectPermission<T... = ...any> = {
+	connect: (self: Signal<T...>, callback: (T...) -> ()) -> Connection,
+	once: (self: Signal<T...>, callback: (T...) -> ()) -> Connection,
 	wait: (self: Signal<T...>, timeout: number?) -> T...,
 }
 
