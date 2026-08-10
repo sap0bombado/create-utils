@@ -14,6 +14,6 @@ license = "MIT"
 name = "sap0bombado/create-scope"
 realm = "shared"
 registry = "https://github.com/UpliftGames/wally-index"
-version = "0.3.0"
+version = "0.3.1"
 
 [dependencies]

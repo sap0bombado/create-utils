@@ -94,7 +94,7 @@ local function add(memory: { any }, ...: any)
 	local mlen = #memory
 	local n = select('#', ...)
 	for i = 1, n do
-		memory[1 + mlen] = select(i, ...)
+		memory[i + mlen] = select(i, ...)
 	end
 end
 
